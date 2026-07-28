@@ -1,0 +1,304 @@
+﻿<Page x:Class="IconExamine.Views.Projects"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      
+      xmlns:viewmodel="clr-namespace:FontExamine.ViewModel"
+      xmlns:model="clr-namespace:FontExamine.Model"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:converters="clr-namespace:FontExamine.Converters"
+      xmlns:base="clr-namespace:FontExamine"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="800"
+      Title="Projects">
+    <Page.DataContext>
+        <viewmodel:ProjectPageViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:MultiParameterConverter x:Key="MultiParameterConverter"/>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <DataTemplate x:Key="ProjectTemplate" DataType="model:ProjectDefn">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" />
+                <TextBlock Text="{Binding Description}" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Width="175"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="IconTemplate" DataType="model:IconDefn">
+            <Grid Visibility="{Binding Visible}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}" Grid.RowSpan="3" VerticalAlignment="Center" IsEnabled="{Binding CanCheck,Mode=OneWay}"/>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="2" />
+                <TextBlock Text="{Binding CommonName}" Grid.Column="2" Grid.Row="2"/>
+                <TextBlock Text="{Binding UnicodeChar}" Grid.RowSpan="4" Grid.Column="1" FontFamily="{Binding FontFamilyName}" FontSize="36"/>
+                <StackPanel Grid.Column="2" Grid.Row="3" Orientation="Horizontal">
+                    <TextBlock Text="{Binding EnumName}"/>
+                    <TextBlock Text="{Binding Hexcode}" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="2" ItemsSource="{Binding ProjectsCollectionViewSource.View}"  ItemTemplate="{StaticResource ProjectTemplate}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedProject,Mode=TwoWay}">
+            <ListView.ContextMenu><ContextMenu>
+                <MenuItem Header="Export Project" Command="{Binding ExportSelectedProjectCommand}"/>
+            </ContextMenu></ListView.ContextMenu></ListView>
+        <Grid Grid.Column="1" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TabControl Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+                <TabItem Header="Project">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Project Name" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBox Text="{Binding SelectedProject.Name,Mode=TwoWay}"  Grid.Column="1" Margin="0,0,0,10"/>
+                            <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding SelectedProject.Description,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="32" VerticalScrollBarVisibility="Auto"/>
+                            <TextBlock Text="Selected Icons" FontWeight="Bold" Grid.Row="2"/>
+                            <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SelectedProject.SelectedIcons}" Height="250" SelectedItem="{Binding SelectedCommonName,Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <StackPanel Orientation="Horizontal">
+
+
+                                            <TextBlock Text="{Binding .}" FontWeight="Bold"/>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Expander Header="Include Projects" Grid.Column="1" Grid.Row="4">
+                                <ListView ItemsSource="{Binding IncludeProjects}" Height="100">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate >
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox IsChecked="{Binding Checked,Mode=TwoWay}" Content="{Binding Name}" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Expander>
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
+                                <TextBox Text="{Binding SelectedProject.ExportPath,Mode=OneWay}" IsReadOnly="True" Width="400"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="&#xf689;" ToolTip="Save project to default file" FontFamily="FluentSystemIcons-Filled" Command="{Binding SaveProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
+                                <Button Content="&#xf109;" Command="{Binding AddProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
+                                <Button Content="&#xf34c;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Delete project from the file, cannot recover deletions" Command="{Binding RemoveProjectCommand}"/>
+                                <Button Content="&#xf380;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Clone the selected project and add to the list" Command="{Binding NotImplementedCommand}"/>
+                                <Button Content="&#xf432;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Browse and set export path" Command="{Binding SelectedProject.BrowseExportPathCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Filled Icons">
+                    <ListView Grid.Row="1" ItemsSource="{Binding FilledIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}" SelectedItem="{Binding SelectedFilledIcon,Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Generate Xaml">
+                                    <MenuItem Header="Button" Command="{Binding GenerateStyledXamlCommand}">
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Filled"/>
+                                                <Binding Source="Button"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                        </MenuItem>
+                                    <MenuItem Header="Toggle Button" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Filled"/>
+                                                <Binding Source="ToggleButton"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <!--<MenuItem Header="Button" Command="{Binding GenerateXamlButtonCommand}" ></MenuItem>-->
+                                    <MenuItem Header="TextBlock" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Filled"/>
+                                                <Binding Source="TextBlock"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Label" Command="{Binding GenerateStyledXamlCommand}">
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Filled"/>
+                                                <Binding Source="Label"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Font Symbol" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Filled"/>
+                                                <Binding Source="FontSymbolIcon"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Regular Icons">
+                    <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RegularIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}" SelectedItem="{Binding SelectedRegularIcon,Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Generate Xaml">
+                                    <MenuItem Header="Button" Command="{Binding GenerateStyledXamlCommand}">
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Regular"/>
+                                                <Binding Source="Button"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <!--<MenuItem Header="Button" Command="{Binding GenerateXamlButtonCommand}" ></MenuItem>-->
+                                    <MenuItem Header="Toggle Button" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Regular"/>
+                                                <Binding Source="ToggleButton"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+
+                                    <MenuItem Header="TextBlock" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Regular"/>
+                                                <Binding Source="TextBlock"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Label" Command="{Binding GenerateStyledXamlCommand}">
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Regular"/>
+                                                <Binding Source="Label"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Font Symbol" Command="{Binding GenerateStyledXamlCommand}" >
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Source="Regular"/>
+                                                <Binding Source="FontSymbolIcon"/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Code">
+                    <TextBox Text="{Binding GeneratedCode}" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </TabItem>
+                <TabItem Header="Templates">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="1" Grid.RowSpan="3">
+                            <Button Content="&#xf150;" Style="{StaticResource FluentButtonFilledGlyph}" Command="{Binding ApplyTemplateCommand}"/>
+                            <!--<Button Content="&#xf794;" Style="{StaticResource FluentButtonFilledGlyph}" Command="{Binding NotImplementedCommand}"/>-->
+                            <ToggleButton Content="&#xf794;" Style="{StaticResource FluentToggleButtoneFilledGlyph}" IsChecked="{Binding ElementName=TestTemplateTextBox, Path=ShowBubbles,Mode=TwoWay}"/>
+                        </StackPanel>
+                        
+                        <base:TokenizedTextBox x:Name="TestTemplateTextBox" Text="{Binding TestTemplate,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        <TextBox Grid.Row="1
+                                 " Text="{Binding AppliedTemplate}" IsReadOnly="True" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" BorderBrush="Brown"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <TextBox Grid.Column="0" Grid.Row="0" Margin="5" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left"/>
+                <Button Content="&#xf194;"  ToolTip="Sync the filled items that are checked with the regular items" Command="{Binding SelectRegularCommand}"  Style="{StaticResource FluentButtonFilledGlyph}"/>
+
+                <Button Content="&#xf2af;" ToolTip="Generate the code for the selected items" Style="{StaticResource FluentButtonFilledGlyph}" Command="{Binding GenerateCodeCommand}" />
+                <Expander Header="Generation Options">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Symbol Name"/>
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SelectedProject.SymbolName,Mode=TwoWay}"/>
+                        <Label Content="Namespace Name" Grid.Row="1"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedProject.NamespaceName,Mode=TwoWay}"/>
+                        <CheckBox Content="Declare namespace during code generation" IsChecked="{Binding SelectedProject.DeclareNamespace,Mode=TwoWay}" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    </Grid>
+                </Expander>
+            </StackPanel>
+
+
+        </Grid>
+    </Grid>
+</Page>

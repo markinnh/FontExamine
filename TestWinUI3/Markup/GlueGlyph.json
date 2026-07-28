@@ -1,0 +1,607 @@
+{
+  "Name": "Master",
+  "Description": "master definitions",
+  "OutputPath": "C:\\Users\\markn\\source\\repos\\IconExamine\\TestWinUI3\\Markup",
+  "LastGenerated": "2026-07-25T00:00:00-07:00",
+  "SymbolName": "SegoeFluent",
+  "NamespaceName": "FontExamine",
+  "DeclareNamespace": false,
+  "UsedFor": "SegoeFluent",
+  "DefinedGlyphs": [
+    {
+      "GlyphId": 57345,
+      "GlyphName": "Checkmark",
+      "GlyphDescription": "checkmark glyph"
+    },
+    {
+      "GlyphId": 57346,
+      "GlyphName": "FilledBlankCheckmark",
+      "GlyphDescription": "filled blank checkmark glyph"
+    },
+    {
+      "GlyphId": 57347,
+      "GlyphName": "BlankCheckmark",
+      "GlyphDescription": "blank checkmark glyph"
+    },
+    {
+      "GlyphId": 57349,
+      "GlyphName": "FilledCheckedCheckmark",
+      "GlyphDescription": "filled checked checkmark glyph"
+    },
+    {
+      "GlyphId": 57350,
+      "GlyphName": "Heart",
+      "GlyphDescription": "heart glyph"
+    },
+    {
+      "GlyphId": 57351,
+      "GlyphName": "FilledBrokenHeart",
+      "GlyphDescription": "filled broken heart glyph"
+    },
+    {
+      "GlyphId": 57354,
+      "GlyphName": "Star",
+      "GlyphDescription": "star glyph"
+    },
+    {
+      "GlyphId": 57358,
+      "GlyphName": "LeftCaret",
+      "GlyphDescription": "left caret glyph"
+    },
+    {
+      "GlyphId": 57359,
+      "GlyphName": "RightCaret",
+      "GlyphDescription": "right caret glyph"
+    },
+    {
+      "GlyphId": 57360,
+      "GlyphName": "UpCaret",
+      "GlyphDescription": "up caret glyph"
+    },
+    {
+      "GlyphId": 57361,
+      "GlyphName": "DownCaret",
+      "GlyphDescription": "down caret glyph"
+    },
+    {
+      "GlyphId": 57471,
+      "GlyphName": "Person",
+      "GlyphDescription": "person glyph"
+    },
+    {
+      "GlyphId": 57492,
+      "GlyphName": "Search",
+      "GlyphDescription": "search glyph"
+    },
+    {
+      "GlyphId": 57479,
+      "GlyphName": "Keyboard",
+      "GlyphDescription": "keyboard glyph"
+    },
+    {
+      "GlyphId": 57487,
+      "GlyphName": "SplitKeyboard",
+      "GlyphDescription": "split keyboard glyph"
+    },
+    {
+      "GlyphId": 57506,
+      "GlyphName": "CheckedCheckmark",
+      "GlyphDescription": "checked checkmark glyph"
+    },
+    {
+      "GlyphId": 57510,
+      "GlyphName": "LeftArrow",
+      "GlyphDescription": "left arrow glyph"
+    },
+    {
+      "GlyphId": 57515,
+      "GlyphName": "RightArrow",
+      "GlyphDescription": "right arrow glyph"
+    },
+    {
+      "GlyphId": 57600,
+      "GlyphName": "Previous",
+      "GlyphDescription": "previous glyph"
+    },
+    {
+      "GlyphId": 57601,
+      "GlyphName": "Next",
+      "GlyphDescription": "next glyph"
+    },
+    {
+      "GlyphId": 57602,
+      "GlyphName": "Play",
+      "GlyphDescription": "play glyph"
+    },
+    {
+      "GlyphId": 57603,
+      "GlyphName": "Pause",
+      "GlyphDescription": "pause glyph"
+    },
+    {
+      "GlyphId": 57604,
+      "GlyphName": "Edit",
+      "GlyphDescription": "edit glyph"
+    },
+    {
+      "GlyphId": 57605,
+      "GlyphName": "Save",
+      "GlyphDescription": "save glyph"
+    },
+    {
+      "GlyphId": 57606,
+      "GlyphName": "Cancel",
+      "GlyphDescription": "cancel glyph"
+    },
+    {
+      "GlyphId": 57607,
+      "GlyphName": "Delete",
+      "GlyphDescription": "delete glyph"
+    },
+    {
+      "GlyphId": 57611,
+      "GlyphName": "Accept",
+      "GlyphDescription": "accept glyph"
+    },
+    {
+      "GlyphId": 57612,
+      "GlyphName": "Ellipse",
+      "GlyphDescription": "ellipse glyph"
+    },
+    {
+      "GlyphId": 57613,
+      "GlyphName": "Redo",
+      "GlyphDescription": "redo glyph"
+    },
+    {
+      "GlyphId": 57614,
+      "GlyphName": "Undo",
+      "GlyphDescription": "undo glyph"
+    },
+    {
+      "GlyphId": 57615,
+      "GlyphName": "Home",
+      "GlyphDescription": "home glyph"
+    },
+    {
+      "GlyphId": 57620,
+      "GlyphName": "Picture",
+      "GlyphDescription": "picture glyph"
+    },
+    {
+      "GlyphId": 57621,
+      "GlyphName": "Settings",
+      "GlyphDescription": "settings glyph"
+    },
+    {
+      "GlyphId": 57622,
+      "GlyphName": "Video",
+      "GlyphDescription": "video glyph"
+    },
+    {
+      "GlyphId": 57623,
+      "GlyphName": "Sync",
+      "GlyphDescription": "sync glyph"
+    },
+    {
+      "GlyphId": 57624,
+      "GlyphName": "Download",
+      "GlyphDescription": "download glyph"
+    },
+    {
+      "GlyphId": 57625,
+      "GlyphName": "Email",
+      "GlyphDescription": "email glyph"
+    },
+    {
+      "GlyphId": 57627,
+      "GlyphName": "Question",
+      "GlyphDescription": "question glyph"
+    },
+    {
+      "GlyphId": 57628,
+      "GlyphName": "Upload",
+      "GlyphDescription": "upload glyph"
+    },
+    {
+      "GlyphId": 57629,
+      "GlyphName": "Happy",
+      "GlyphDescription": "happy glyph"
+    },
+    {
+      "GlyphId": 57633,
+      "GlyphName": "Clock",
+      "GlyphDescription": "clock glyph"
+    },
+    {
+      "GlyphId": 57634,
+      "GlyphName": "Send",
+      "GlyphDescription": "send glyph"
+    },
+    {
+      "GlyphId": 57635,
+      "GlyphName": "Crop",
+      "GlyphDescription": "crop glyph"
+    },
+    {
+      "GlyphId": 57637,
+      "GlyphName": "Group",
+      "GlyphDescription": "group glyph"
+    },
+    {
+      "GlyphId": 57640,
+      "GlyphName": "Globe",
+      "GlyphDescription": "globe glyph"
+    },
+    {
+      "GlyphId": 57641,
+      "GlyphName": "Flag",
+      "GlyphDescription": "flag glyph"
+    },
+    {
+      "GlyphId": 57643,
+      "GlyphName": "World",
+      "GlyphDescription": "world glyph"
+    },
+    {
+      "GlyphId": 57646,
+      "GlyphName": "ZoomIn",
+      "GlyphDescription": "zoom in glyph"
+    },
+    {
+      "GlyphId": 57648,
+      "GlyphName": "Document",
+      "GlyphDescription": "document glyph"
+    },
+    {
+      "GlyphId": 57649,
+      "GlyphName": "LockedDocument",
+      "GlyphDescription": "locked document glyph"
+    },
+    {
+      "GlyphId": 57650,
+      "GlyphName": "FilledDocument",
+      "GlyphDescription": "filled document glyph"
+    },
+    {
+      "GlyphId": 57652,
+      "GlyphName": "ConversationBubble",
+      "GlyphDescription": "conversation bubble glyph"
+    },
+    {
+      "GlyphId": 57654,
+      "GlyphName": "Profile",
+      "GlyphDescription": "profile glyph"
+    },
+    {
+      "GlyphId": 57655,
+      "GlyphName": "HangUp",
+      "GlyphDescription": "hang up glyph"
+    },
+    {
+      "GlyphId": 57657,
+      "GlyphName": "Pin",
+      "GlyphDescription": "pin glyph"
+    },
+    {
+      "GlyphId": 57658,
+      "GlyphName": "Answer",
+      "GlyphDescription": "answer glyph"
+    },
+    {
+      "GlyphId": 57659,
+      "GlyphName": "StartConversation",
+      "GlyphDescription": "start conversation glyph"
+    },
+    {
+      "GlyphId": 57660,
+      "GlyphName": "Exchange",
+      "GlyphDescription": "exchange glyph"
+    },
+    {
+      "GlyphId": 57662,
+      "GlyphName": "EditField",
+      "GlyphDescription": "edit field glyph"
+    },
+    {
+      "GlyphId": 57665,
+      "GlyphName": "PushPin",
+      "GlyphDescription": "push pin glyph"
+    },
+    {
+      "GlyphId": 57673,
+      "GlyphName": "Refresh",
+      "GlyphDescription": "refresh glyph"
+    },
+    {
+      "GlyphId": 57675,
+      "GlyphName": "Merge",
+      "GlyphDescription": "merge glyph"
+    },
+    {
+      "GlyphId": 57689,
+      "GlyphName": "DownloadAndSave",
+      "GlyphDescription": "download and save glyph"
+    },
+    {
+      "GlyphId": 57694,
+      "GlyphName": "Repair",
+      "GlyphDescription": "repair glyph"
+    },
+    {
+      "GlyphId": 57704,
+      "GlyphName": "At",
+      "GlyphDescription": "at glyph"
+    },
+    {
+      "GlyphId": 57707,
+      "GlyphName": "Cut",
+      "GlyphDescription": "cut glyph"
+    },
+    {
+      "GlyphId": 57708,
+      "GlyphName": "Attach",
+      "GlyphDescription": "attach glyph"
+    },
+    {
+      "GlyphId": 57709,
+      "GlyphName": "Paste",
+      "GlyphDescription": "paste glyph"
+    },
+    {
+      "GlyphId": 57710,
+      "GlyphName": "Filter",
+      "GlyphDescription": "filter glyph"
+    },
+    {
+      "GlyphId": 57711,
+      "GlyphName": "Copy",
+      "GlyphDescription": "copy glyph"
+    },
+    {
+      "GlyphId": 57712,
+      "GlyphName": "SmilingEmoji",
+      "GlyphDescription": "smiling emoji glyph"
+    },
+    {
+      "GlyphId": 57713,
+      "GlyphName": "Exclaimation",
+      "GlyphDescription": "exclaimation glyph"
+    },
+    {
+      "GlyphId": 57714,
+      "GlyphName": "ReplyEmail",
+      "GlyphDescription": "reply email glyph"
+    },
+    {
+      "GlyphId": 57764,
+      "GlyphName": "ZoomOut",
+      "GlyphDescription": "zoom out glyph"
+    },
+    {
+      "GlyphId": 57736,
+      "GlyphName": "FilledFolder",
+      "GlyphDescription": "filled folder glyph"
+    },
+    {
+      "GlyphId": 57746,
+      "GlyphName": "Key",
+      "GlyphDescription": "key glyph"
+    },
+    {
+      "GlyphId": 57754,
+      "GlyphName": "Underline",
+      "GlyphDescription": "underline glyph"
+    },
+    {
+      "GlyphId": 57755,
+      "GlyphName": "Bold",
+      "GlyphDescription": "bold glyph"
+    },
+    {
+      "GlyphId": 57756,
+      "GlyphName": "ForwardFolder",
+      "GlyphDescription": "forward folder glyph"
+    },
+    {
+      "GlyphId": 57757,
+      "GlyphName": "GiveRating",
+      "GlyphDescription": "give rating glyph"
+    },
+    {
+      "GlyphId": 57758,
+      "GlyphName": "ThumbsDown",
+      "GlyphDescription": "thumbs down glyph"
+    },
+    {
+      "GlyphId": 57759,
+      "GlyphName": "ThumbsUp",
+      "GlyphDescription": "thumbs up glyph"
+    },
+    {
+      "GlyphId": 57760,
+      "GlyphName": "RightAlign",
+      "GlyphDescription": "right align glyph"
+    },
+    {
+      "GlyphId": 57761,
+      "GlyphName": "CenterAlign",
+      "GlyphDescription": "center align glyph"
+    },
+    {
+      "GlyphId": 57762,
+      "GlyphName": "LeftAlign",
+      "GlyphDescription": "left align glyph"
+    },
+    {
+      "GlyphId": 57765,
+      "GlyphName": "ShareDocument",
+      "GlyphDescription": "share document glyph"
+    },
+    {
+      "GlyphId": 57818,
+      "GlyphName": "AddFolder",
+      "GlyphDescription": "add folder glyph"
+    },
+    {
+      "GlyphId": 57823,
+      "GlyphName": "SyncFolder",
+      "GlyphDescription": "sync folder glyph"
+    },
+    {
+      "GlyphId": 57846,
+      "GlyphName": "Locked",
+      "GlyphDescription": "locked glyph"
+    },
+    {
+      "GlyphId": 57847,
+      "GlyphName": "Unlocked",
+      "GlyphDescription": "unlocked glyph"
+    },
+    {
+      "GlyphId": 57873,
+      "GlyphName": "DesktopComputer",
+      "GlyphDescription": "desktop computer glyph"
+    },
+    {
+      "GlyphId": 57999,
+      "GlyphName": "EditSave",
+      "GlyphDescription": "edit save glyph"
+    },
+    {
+      "GlyphId": 58004,
+      "GlyphName": "Scan",
+      "GlyphDescription": "scan glyph"
+    },
+    {
+      "GlyphId": 58032,
+      "GlyphName": "LandscapePortrait",
+      "GlyphDescription": "landscape portrait glyph"
+    },
+    {
+      "GlyphId": 58102,
+      "GlyphName": "Print",
+      "GlyphDescription": "print glyph"
+    },
+    {
+      "GlyphId": 58919,
+      "GlyphName": "RewindFilled",
+      "GlyphDescription": "rewind filled glyph"
+    },
+    {
+      "GlyphId": 58920,
+      "GlyphName": "FastForwardFilled",
+      "GlyphDescription": "fast forward filled glyph"
+    },
+    {
+      "GlyphId": 58914,
+      "GlyphName": "PreviousFilled",
+      "GlyphDescription": "previous filled glyph"
+    },
+    {
+      "GlyphId": 58915,
+      "GlyphName": "NextFilled",
+      "GlyphDescription": "next filled glyph"
+    },
+    {
+      "GlyphId": 58970,
+      "GlyphName": "Mouse",
+      "GlyphDescription": "mouse glyph"
+    },
+    {
+      "GlyphId": 59137,
+      "GlyphName": "WiFi",
+      "GlyphDescription": "wi fi glyph"
+    },
+    {
+      "GlyphId": 59143,
+      "GlyphName": "PinInMap",
+      "GlyphDescription": "pin in map glyph"
+    },
+    {
+      "GlyphId": 59173,
+      "GlyphName": "SendFilled",
+      "GlyphDescription": "send filled glyph"
+    },
+    {
+      "GlyphId": 59368,
+      "GlyphName": "Power",
+      "GlyphDescription": "power glyph"
+    },
+    {
+      "GlyphId": 59410,
+      "GlyphName": "UpCaretFilled",
+      "GlyphDescription": "up caret filled glyph"
+    },
+    {
+      "GlyphId": 59411,
+      "GlyphName": "DownCaretFilled",
+      "GlyphDescription": "down caret filled glyph"
+    },
+    {
+      "GlyphId": 59439,
+      "GlyphName": "IdeaOff",
+      "GlyphDescription": "idea off glyph"
+    },
+    {
+      "GlyphId": 59448,
+      "GlyphName": "OpenFolder",
+      "GlyphDescription": "open folder glyph"
+    },
+    {
+      "GlyphId": 59686,
+      "GlyphName": "Backspace",
+      "GlyphDescription": "backspace glyph"
+    },
+    {
+      "GlyphId": 59688,
+      "GlyphName": "Fingerprint",
+      "GlyphDescription": "fingerprint glyph"
+    },
+    {
+      "GlyphId": 59715,
+      "GlyphName": "CurlyBraces",
+      "GlyphDescription": "curly braces glyph"
+    },
+    {
+      "GlyphId": 59719,
+      "GlyphName": "Multiply",
+      "GlyphDescription": "multiply glyph"
+    },
+    {
+      "GlyphId": 59720,
+      "GlyphName": "Add",
+      "GlyphDescription": "add glyph"
+    },
+    {
+      "GlyphId": 59721,
+      "GlyphName": "Subtract",
+      "GlyphDescription": "subtract glyph"
+    },
+    {
+      "GlyphId": 59722,
+      "GlyphName": "Divide",
+      "GlyphDescription": "divide glyph"
+    },
+    {
+      "GlyphId": 59723,
+      "GlyphName": "SquareRoot",
+      "GlyphDescription": "square root glyph"
+    },
+    {
+      "GlyphId": 59724,
+      "GlyphName": "Percent",
+      "GlyphDescription": "percent glyph"
+    },
+    {
+      "GlyphId": 59628,
+      "GlyphName": "Tag",
+      "GlyphDescription": "tag glyph"
+    },
+    {
+      "GlyphId": 59717,
+      "GlyphName": "Event",
+      "GlyphDescription": "event glyph"
+    }
+  ]
+}

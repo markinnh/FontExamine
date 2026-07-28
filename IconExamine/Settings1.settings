@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FontExamine" GeneratedClassName="Settings1">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Icon Work</Value>
+    </Setting>
+    <Setting Name="LastPage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Views\Projects.xaml</Value>
+    </Setting>
+    <Setting Name="ProjectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\\Users\\markn\\source\\repos\\IconExamine\\IconExamine\\</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

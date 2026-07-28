@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="IconExamine/FontExamine.csproj" />
+  <Project Path="TestWinUI3/TestWinUI3.csproj" Id="9aea8d3d-b3ab-4f97-912f-8fd5ef169d58">
+    <Platform Project="x64" />
+    <Deploy />
+  </Project>
+</Solution>

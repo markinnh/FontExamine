@@ -1,0 +1,136 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:Double x:Key="CommandButtonDim">25</sys:Double>
+    <sys:Double x:Key="CommandButtonGlyphHeight">16</sys:Double>
+    
+    <Style TargetType="Button" x:Key="RoundedButton">
+        <Setter Property="Width" Value="75"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="3" Background="#eee" BorderBrush="#aaa" BorderThickness="0.5,1.2,1.2,0.5" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Margin}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation To="60" Duration="0:0:1.5" AccelerationRatio="0.1" DecelerationRatio="0.25" Storyboard.TargetProperty="(Button.Width)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:1.5" AccelerationRatio="0.1" DecelerationRatio="0.25" Storyboard.TargetProperty="(Button.Width)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation To="70" Duration="0:0:0.1" AutoReverse="True" Storyboard.TargetProperty="(Button.Width)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SegoeUISymbolIcon" TargetType="Button" BasedOn="{StaticResource RoundedButton}">
+        <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+        <Setter Property="FontSize" Value="{StaticResource CommandButtonGlyphHeight}"/>
+        <Setter Property="Width" Value="{StaticResource CommandButtonDim}"/>
+        <Setter Property="Height" Value="{StaticResource CommandButtonDim}"/>
+        <Setter Property="Margin" Value="3,0,0,3"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="CommandButton" BasedOn="{StaticResource RoundedButton}" TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource CommandButtonGlyphHeight}"/>
+        <Setter Property="Width" Value="{StaticResource CommandButtonDim}"/>
+        <Setter Property="Height" Value="{StaticResource CommandButtonDim}"/>
+        <Setter Property="Margin" Value="3,3,0,0"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF0078D7"/>
+                <Setter Property="Foreground" Value="Blue"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FF005A9E"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#FFE1E1E1"/>
+                <Setter Property="Foreground" Value="#FFB0B0B0"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+    <Style x:Key="FluentToggleButtoneFilledGlyph" TargetType="ToggleButton">
+        <Setter Property="FontFamily" Value="FluentSystemIcons-Filled"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Margin" Value="3,3,0,0"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF0078D7"/>
+                <Setter Property="Foreground" Value="Blue"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FF005A9E"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#FFE1E1E1"/>
+                <Setter Property="Foreground" Value="#FFB0B0B0"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+    <Style TargetType="Button" x:Key="FluentButtonFilledGlyph" BasedOn="{StaticResource CommandButton}">
+        <Setter Property="FontFamily" Value="FluentSystemIcons-Filled"/>
+        <!--<Setter Property="FontSize" Value="{StaticResource CommandButtonGlyphHeight}"/>
+            <Setter Property="Width" Value="{StaticResource CommandButtonDim}"/>
+            <Setter Property="Height" Value="{StaticResource CommandButtonDim}"/>-->
+    </Style>
+    <Style TargetType="Button" x:Key="FluentButtonRegularGlyph" BasedOn="{StaticResource CommandButton}">
+        <Setter Property="FontFamily" Value="FluentSystemIcons-Regular"/>
+        <!--<Setter Property="FontSize" Value="{StaticResource CommandButtonGlyphHeight}"/>
+            <Setter Property="Width" Value="{StaticResource CommandButtonDim}"/>
+            <Setter Property="Height" Value="{StaticResource CommandButtonDim}"/>
+            <Setter Property="Margin" Value="3,3,0,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF0078D7"/>
+                    <Setter Property="Foreground" Value="Blue"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF005A9E"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#FFE1E1E1"/>
+                    <Setter Property="Foreground" Value="#FFB0B0B0"/>
+                </Trigger>
+            </Style.Triggers>-->
+
+    </Style>
+    <Style TargetType="TextBlock" x:Key="FluentTextBlockRegularGlyph">
+        <Setter Property="FontFamily" Value="FluentSystemIcons-Regular"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="FluentTextBlockFilledGlyph">
+        <Setter Property="FontFamily" Value="FluentSystemIcons-Filled"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+</ResourceDictionary>

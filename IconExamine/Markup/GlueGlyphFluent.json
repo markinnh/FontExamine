@@ -1,0 +1,367 @@
+{
+  "Name": "Fluent",
+  "Description": "Filament",
+  "OutputPath": "C:\\Users\\markn\\source\\repos\\IconExamine\\IconExamine\\Markup",
+  "LastGenerated": "2026-07-24T00:00:00-07:00",
+  "SymbolName": "Fluent",
+  "NamespaceName": "FontExamine",
+  "DeclareNamespace": false,
+  "UsedFor": "FluentRegular",
+  "DefinedGlyphs": [
+    {
+      "GlyphId": 61705,
+      "GlyphName": "Add20",
+      "GlyphDescription": "add20 glyph"
+    },
+    {
+      "GlyphId": 61708,
+      "GlyphName": "AddCircle20",
+      "GlyphDescription": "add circle20 glyph"
+    },
+    {
+      "GlyphId": 61732,
+      "GlyphName": "AppGeneric24",
+      "GlyphDescription": "app generic24 glyph"
+    },
+    {
+      "GlyphId": 61752,
+      "GlyphName": "AppsList24",
+      "GlyphDescription": "apps list24 glyph"
+    },
+    {
+      "GlyphId": 61783,
+      "GlyphName": "ArrowForward20",
+      "GlyphDescription": "arrow forward20 glyph"
+    },
+    {
+      "GlyphId": 61785,
+      "GlyphName": "ArrowImport20",
+      "GlyphDescription": "arrow import20 glyph"
+    },
+    {
+      "GlyphId": 61802,
+      "GlyphName": "ArrowNext20",
+      "GlyphDescription": "arrow next20 glyph"
+    },
+    {
+      "GlyphId": 61804,
+      "GlyphName": "ArrowPrevious20",
+      "GlyphDescription": "arrow previous20 glyph"
+    },
+    {
+      "GlyphId": 61806,
+      "GlyphName": "ArrowRedo20",
+      "GlyphDescription": "arrow redo20 glyph"
+    },
+    {
+      "GlyphId": 61825,
+      "GlyphName": "ArrowRight20",
+      "GlyphDescription": "arrow right20 glyph"
+    },
+    {
+      "GlyphId": 61835,
+      "GlyphName": "ArrowSort24",
+      "GlyphDescription": "arrow sort24 glyph"
+    },
+    {
+      "GlyphId": 61840,
+      "GlyphName": "ArrowSync20",
+      "GlyphDescription": "arrow sync20 glyph"
+    },
+    {
+      "GlyphId": 61843,
+      "GlyphName": "ArrowSyncCircle20",
+      "GlyphDescription": "arrow sync circle20 glyph"
+    },
+    {
+      "GlyphId": 61849,
+      "GlyphName": "ArrowUndo20",
+      "GlyphDescription": "arrow undo20 glyph"
+    },
+    {
+      "GlyphId": 61865,
+      "GlyphName": "Attach20",
+      "GlyphDescription": "attach20 glyph"
+    },
+    {
+      "GlyphId": 61961,
+      "GlyphName": "BuildingRetail24",
+      "GlyphDescription": "building retail24 glyph"
+    },
+    {
+      "GlyphId": 62053,
+      "GlyphName": "CaretLeft20",
+      "GlyphDescription": "caret left20 glyph"
+    },
+    {
+      "GlyphId": 62057,
+      "GlyphName": "CaretRight20",
+      "GlyphDescription": "caret right20 glyph"
+    },
+    {
+      "GlyphId": 62093,
+      "GlyphName": "CheckboxChecked20",
+      "GlyphDescription": "checkbox checked20 glyph"
+    },
+    {
+      "GlyphId": 62097,
+      "GlyphName": "CheckboxUnchecked20",
+      "GlyphDescription": "checkbox unchecked20 glyph"
+    },
+    {
+      "GlyphId": 62100,
+      "GlyphName": "Checkmark20",
+      "GlyphDescription": "checkmark20 glyph"
+    },
+    {
+      "GlyphId": 62104,
+      "GlyphName": "CheckmarkCircle20",
+      "GlyphDescription": "checkmark circle20 glyph"
+    },
+    {
+      "GlyphId": 62128,
+      "GlyphName": "ChevronRight20",
+      "GlyphDescription": "chevron right20 glyph"
+    },
+    {
+      "GlyphId": 62180,
+      "GlyphName": "Cloud20",
+      "GlyphDescription": "cloud20 glyph"
+    },
+    {
+      "GlyphId": 62228,
+      "GlyphName": "Compose20",
+      "GlyphDescription": "compose20 glyph"
+    },
+    {
+      "GlyphId": 62251,
+      "GlyphName": "Copy20",
+      "GlyphDescription": "copy20 glyph"
+    },
+    {
+      "GlyphId": 62266,
+      "GlyphName": "Cut20",
+      "GlyphDescription": "cut20 glyph"
+    },
+    {
+      "GlyphId": 62284,
+      "GlyphName": "Delete20",
+      "GlyphDescription": "delete20 glyph"
+    },
+    {
+      "GlyphId": 62290,
+      "GlyphName": "DeleteOff20",
+      "GlyphDescription": "delete off20 glyph"
+    },
+    {
+      "GlyphId": 62313,
+      "GlyphName": "Dismiss20",
+      "GlyphDescription": "dismiss20 glyph"
+    },
+    {
+      "GlyphId": 62317,
+      "GlyphName": "DismissCircle20",
+      "GlyphDescription": "dismiss circle20 glyph"
+    },
+    {
+      "GlyphId": 62336,
+      "GlyphName": "DocumentCopy20",
+      "GlyphDescription": "document copy20 glyph"
+    },
+    {
+      "GlyphId": 62429,
+      "GlyphName": "Edit20",
+      "GlyphDescription": "edit20 glyph"
+    },
+    {
+      "GlyphId": 62432,
+      "GlyphName": "Emoji20",
+      "GlyphDescription": "emoji20 glyph"
+    },
+    {
+      "GlyphId": 62435,
+      "GlyphName": "EmojiAngry20",
+      "GlyphDescription": "emoji angry20 glyph"
+    },
+    {
+      "GlyphId": 62441,
+      "GlyphName": "EmojiSad20",
+      "GlyphDescription": "emoji sad20 glyph"
+    },
+    {
+      "GlyphId": 62449,
+      "GlyphName": "ErrorCircle20",
+      "GlyphDescription": "error circle20 glyph"
+    },
+    {
+      "GlyphId": 62470,
+      "GlyphName": "Filter20",
+      "GlyphDescription": "filter20 glyph"
+    },
+    {
+      "GlyphId": 62473,
+      "GlyphName": "Fingerprint24",
+      "GlyphDescription": "fingerprint24 glyph"
+    },
+    {
+      "GlyphId": 62475,
+      "GlyphName": "Flag20",
+      "GlyphDescription": "flag20 glyph"
+    },
+    {
+      "GlyphId": 62488,
+      "GlyphName": "Folder20",
+      "GlyphDescription": "folder20 glyph"
+    },
+    {
+      "GlyphId": 62554,
+      "GlyphName": "Globe20",
+      "GlyphDescription": "globe20 glyph"
+    },
+    {
+      "GlyphId": 62592,
+      "GlyphName": "Home20",
+      "GlyphDescription": "home20 glyph"
+    },
+    {
+      "GlyphId": 62623,
+      "GlyphName": "Important20",
+      "GlyphDescription": "important20 glyph"
+    },
+    {
+      "GlyphId": 62625,
+      "GlyphName": "Incognito24",
+      "GlyphDescription": "incognito24 glyph"
+    },
+    {
+      "GlyphId": 62627,
+      "GlyphName": "Info20",
+      "GlyphDescription": "info20 glyph"
+    },
+    {
+      "GlyphId": 62675,
+      "GlyphName": "Library24",
+      "GlyphDescription": "library24 glyph"
+    },
+    {
+      "GlyphId": 62678,
+      "GlyphName": "Lightbulb20",
+      "GlyphDescription": "lightbulb20 glyph"
+    },
+    {
+      "GlyphId": 62692,
+      "GlyphName": "Link20",
+      "GlyphDescription": "link20 glyph"
+    },
+    {
+      "GlyphId": 62697,
+      "GlyphName": "LinkEdit20",
+      "GlyphDescription": "link edit20 glyph"
+    },
+    {
+      "GlyphId": 62819,
+      "GlyphName": "New16",
+      "GlyphDescription": "new16 glyph"
+    },
+    {
+      "GlyphId": 62820,
+      "GlyphName": "New24",
+      "GlyphDescription": "new24 glyph"
+    },
+    {
+      "GlyphId": 62825,
+      "GlyphName": "Next20",
+      "GlyphDescription": "next20 glyph"
+    },
+    {
+      "GlyphId": 62977,
+      "GlyphName": "Pin20",
+      "GlyphDescription": "pin20 glyph"
+    },
+    {
+      "GlyphId": 63016,
+      "GlyphName": "Previous20",
+      "GlyphDescription": "previous20 glyph"
+    },
+    {
+      "GlyphId": 63021,
+      "GlyphName": "Prohibited20",
+      "GlyphDescription": "prohibited20 glyph"
+    },
+    {
+      "GlyphId": 63032,
+      "GlyphName": "Question20",
+      "GlyphDescription": "question20 glyph"
+    },
+    {
+      "GlyphId": 63103,
+      "GlyphName": "Save20",
+      "GlyphDescription": "save20 glyph"
+    },
+    {
+      "GlyphId": 63119,
+      "GlyphName": "Search20",
+      "GlyphDescription": "search20 glyph"
+    },
+    {
+      "GlyphId": 63129,
+      "GlyphName": "Send20",
+      "GlyphDescription": "send20 glyph"
+    },
+    {
+      "GlyphId": 63145,
+      "GlyphName": "Settings20",
+      "GlyphDescription": "settings20 glyph"
+    },
+    {
+      "GlyphId": 63276,
+      "GlyphName": "Storage24",
+      "GlyphDescription": "storage24 glyph"
+    },
+    {
+      "GlyphId": 63356,
+      "GlyphName": "Tag20",
+      "GlyphDescription": "tag20 glyph"
+    },
+    {
+      "GlyphId": 63517,
+      "GlyphName": "ThumbDislike20",
+      "GlyphDescription": "thumb dislike20 glyph"
+    },
+    {
+      "GlyphId": 63519,
+      "GlyphName": "ThumbLike20",
+      "GlyphDescription": "thumb like20 glyph"
+    },
+    {
+      "GlyphId": 63524,
+      "GlyphName": "TimePicker24",
+      "GlyphDescription": "time picker24 glyph"
+    },
+    {
+      "GlyphId": 63681,
+      "GlyphName": "Wrench24",
+      "GlyphDescription": "wrench24 glyph"
+    },
+    {
+      "GlyphId": 63684,
+      "GlyphName": "ZoomIn20",
+      "GlyphDescription": "zoom in20 glyph"
+    },
+    {
+      "GlyphId": 63686,
+      "GlyphName": "ZoomOut20",
+      "GlyphDescription": "zoom out20 glyph"
+    },
+    {
+      "GlyphId": 61703,
+      "GlyphName": "Add12",
+      "GlyphDescription": "add12 glyph"
+    },
+    {
+      "GlyphId": 61711,
+      "GlyphName": "Airplane20",
+      "GlyphDescription": "airplane20 glyph"
+    }
+  ]
+}

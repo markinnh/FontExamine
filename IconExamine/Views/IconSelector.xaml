@@ -1,0 +1,74 @@
+﻿<Page x:Class="IconExamine.IconSelector"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IconExamine"
+      xmlns:viewmodel="clr-namespace:FontExamine.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="IconSelector">
+    <Page.DataContext>
+        <viewmodel:IconSelectorViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <DataTemplate x:Key="IconTemplate" DataType="model:IconDefn">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}" Grid.RowSpan="3" VerticalAlignment="Center" IsEnabled="{Binding CanCheck,Mode=OneWay}"/>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="2" />
+                <TextBlock Text="{Binding CommonName}" Grid.Column="2" Grid.Row="2"/>
+                <TextBlock Text="{Binding UnicodeString}" Grid.RowSpan="4" Grid.Column="1" FontFamily="{Binding FontFamilyName}" FontSize="32"/>
+                <StackPanel Grid.Column="2" Grid.Row="3" Orientation="Horizontal">
+                    <TextBlock Text="{Binding EnumName}"/>
+                    <TextBlock Text="{Binding Hexcode}" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+            <TabItem Header="Filled Icons">
+                <ListView Grid.Row="1" ItemsSource="{Binding FilledIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Regular Icons">
+                <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RegularIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}"/>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <TextBox Grid.Column="0" Grid.Row="0" Margin="5" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left"/>
+            <Button   ToolTip="Select the matching regular items that are checked" Command="{Binding SelectRegularCommand}" Width="50" Height="26" Margin="3,0,3,0">
+                <Button.Content>
+                    <TextBlock Text="&#xf18f;" FontFamily="FluentSystemIcons-Filled" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button Content="&#xf2af;" ToolTip="Generate the code for the selected items" FontFamily="FluentSystemIcons-Filled" Command="{Binding GenerateCodeCommand}" Width="50" Height="26"/>
+        </StackPanel>
+        
+        
+    </Grid>
+</Page>

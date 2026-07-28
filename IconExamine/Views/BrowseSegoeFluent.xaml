@@ -1,0 +1,219 @@
+﻿<Page x:Class="FontExamine.Views.BrowseSegoeFluent"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FontExamine.Views"
+      xmlns:vm="clr-namespace:FontExamine.ViewModel"
+      xmlns:markup="clr-namespace:FontExamine.Markup"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BrowseSegoeFluent">
+    <Page.DataContext>
+        <vm:BrowseSegoeFluentViewModel/>
+    </Page.DataContext>
+    <Page.InputBindings>
+        <KeyBinding Key="Add" Modifiers="Alt" Command="{Binding AddGlyphToProjectCommand }"/>
+    </Page.InputBindings>
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <DataTemplate x:Key="DisplayLightGlyph" DataType="model:LightGlyphDefn">
+            <Grid Margin="3">
+
+                <TextBlock Text="{Binding UnicodeChar ,Mode=OneWay}" FontSize="20" Width="28" Height="28" FontFamily="Segoe Fluent Icons" ToolTip="{Binding XamlString,Mode=OneWay}"/>
+                <TextBlock Text="&#xE000;" FontSize="10" FontFamily="Segoe UI Symbol" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="{Binding HasDocument,Converter={StaticResource VisibilityConverter}}"/>
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="EditGlyphDocument" DataType="model:GlyphDocument">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding UnicodeChar}" FontFamily="Segoe UI Symbol" FontSize="32" Grid.RowSpan="3"/>
+                <Label Content="Name" Grid.Column="1"/>
+                <TextBox Text="{Binding GlyphName,Mode=TwoWay}" Grid.Column="2" Margin="0,3,0,3"/>
+                <Label Content="Description" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Text="{Binding GlyphDescription,Mode=TwoWay}" Grid.Column="2" Grid.Row="1" Margin="0,3,0,3"/>
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="EditSegoeFluentGlyphDocument" DataType="model:GlyphDocument">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding UnicodeChar}" FontFamily="Segoe Fluent Icons" FontSize="32" Grid.RowSpan="3"/>
+                <Label Content="Name" Grid.Column="1"/>
+                <TextBox Text="{Binding GlyphName,Mode=TwoWay}" Grid.Column="2" Margin="0,3,0,3"/>
+                <Label Content="Description" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Text="{Binding GlyphDescription,Mode=TwoWay}" Grid.Column="2" Grid.Row="1" Margin="0,3,0,3"/>
+
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView ItemTemplate="{StaticResource DisplayLightGlyph}" SelectedItem="{Binding ActiveGlyph,Mode=TwoWay}" ItemsSource="{Binding GlyphIds}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsContainerVirtualizable="True">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Generate Xaml">
+                        <MenuItem Header="Button" Command="{Binding GenerateXamlCommand}" CommandParameter="Button"/>
+                        <MenuItem Header="TextBlock" Command="{Binding GenerateXamlCommand}" CommandParameter="TextBlock"/>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <TabControl Grid.Column="1">
+            <TabItem Header="Symbols">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding ActiveDefinition.DefinedGlyphs}" SelectedItem="{Binding EditDocument,Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="model:GlyphDocument">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding UnicodeChar,Mode=OneWay}" FontSize="20" FontFamily="Segoe Fluent Icons" Grid.RowSpan="3"/>
+                                    <TextBlock Text="{Binding GlyphName}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding GlyphDescription}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ContentControl Grid.Column="1" ContentTemplate="{StaticResource EditSegoeFluentGlyphDocument}" Content="{Binding EditDocument,Mode=TwoWay}"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <!--<Button Content="&#xE017;" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding AddGlyphToProjectCommand}"/>-->
+                        <Button Content="{markup:FluentRegularMarkup Glyph=ArrowForward20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding AddGlyphToProjectCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Definitions" Margin="-2,-2,-2,2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding SymbolIconDefinitionsProject.Definitions}" SelectedItem="{Binding ActiveDefinition,Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="model:SymbolIconDefinitions">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Description}" Grid.Row="1" Width="150" TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Export Definition" Command="{Binding ExportSymbolDefinitionsProjectCommand}">
+                                    <MenuItem.Icon>
+                                        <TextBlock Text="{markup:FluentRegularMarkup Glyph=ArrowRight20}" FontSize="16" Style="{StaticResource FluentTextBlockRegularGlyph}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Definition Name"/>
+                        <TextBox Text="{Binding ActiveDefinition.Name,Mode=TwoWay}" Grid.Column="1" Margin="0,0,0,3"/>
+                        <Label Content="Definition Description" Grid.Row="1"/>
+                        <TextBox Text="{Binding ActiveDefinition.Description,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,3"/>
+                        <Label Content="Export Path" Grid.Row="2" />
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                            <TextBox Text="{Binding ActiveDefinition.OutputPath,Mode=TwoWay}"  Margin="0,3,0,3"  Width="220"/>
+                            <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportPathCommand}" />
+                        </StackPanel>
+                        <Expander Header="Last Generated" Grid.Row="3" Grid.Column="1">
+                            <DatePicker SelectedDate="{Binding ActiveDefinition.LastGenerated,Mode=OneWay}" DisplayDate="{Binding ActiveDefinition.LastGenerated,Mode=OneWay}" IsEnabled="True"/>
+                        </Expander>
+                        <Expander Header="Generation Definitions" Grid.Row="4" Grid.Column="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Symbols Name"/>
+                                <TextBox Text="{Binding ActiveDefinition.SymbolName,Mode=TwoWay}" ToolTip="Symbols name without adding Symbols" Grid.Column="1" Margin="3,0,3,0"/>
+                                <Label Content="Namespace" ToolTip="Namespace for the generated static class" Grid.Row="1"/>
+                                <TextBox Text="{Binding ActiveDefinition.NamespaceName,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="3,0,3,0"/>
+                                <CheckBox Content="declare namespace in code generation" Grid.Row="2" Grid.ColumnSpan="2" IsChecked="{Binding ActiveDefinition.DeclareNamespace,Mode=TwoWay}" Margin="3,0,3,0"/>
+                            </Grid>
+                        </Expander>
+                        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Button Content="{markup:FluentRegularMarkup Glyph=Add20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Add a definition to the collection" Command="{Binding AddProjectCommand}"/>
+                            <Button Content="{markup:FluentRegularMarkup Glyph=Save20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Save definitions project" Foreground="Blue" Command="{Binding SaveSymbolDefinitionsProjectCommand}"/>
+                            <Button Content="{markup:FluentRegularMarkup Glyph=Delete20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Delete selected definition"/>
+                            <Button Content="{markup:FluentRegularMarkup Glyph=CaretRight20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding GenerateStaticClassCommand}"/>
+                            <Button Content="{markup:SegoeSymbolMarkup Glyph=Cancel}" Foreground="DarkRed" Style="{StaticResource SegoeUISymbolIcon}" IsEnabled="False"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
