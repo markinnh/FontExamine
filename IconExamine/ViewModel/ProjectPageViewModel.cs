@@ -80,6 +80,8 @@ namespace FontExamine.ViewModel
         public ProjectPageViewModel()
         {
             Projects = SerializeProjects.LoadProjects();
+            Projects.NotifyLoaded();
+
             int initialHash = Projects.GetHashCode();
 #if DEBUG
             Singleton<FLuentSymbolsProjectsDefn>.Instance.AddDefaultProject();
@@ -97,7 +99,20 @@ namespace FontExamine.ViewModel
             RegularIconCollectionViewSource.Filter += new FilterEventHandler(ApplyFilter);
             FilledIconCollectionViewSource.Filter += new FilterEventHandler(ApplyFilter);
             SearchText = string.Empty;
+            WeakReferenceMessenger.Default.Register<FluentGlyphSelectionChangedEventArgs>(this, HandleGlyphSelectionChanged);
         }
+
+        private void HandleGlyphSelectionChanged(object recipient, FluentGlyphSelectionChangedEventArgs message)
+        {
+            //throw new NotImplementedException();
+            if ( SelectedProject != null) { 
+                if(message.IsSelected)
+                    SelectedProject.SelectedIcons.Add(message.Glyph.CommonName);
+                else
+                    SelectedProject.SelectedIcons.Remove(message.Glyph.CommonName);
+            }
+        }
+
         private void ApplyFilter(object sender, FilterEventArgs e)
         {
             if (e.Item is FluentGlyphDefn defn)
@@ -198,7 +213,8 @@ namespace FontExamine.ViewModel
             if (SelectedProject != null)
             {
                 SynchronizeContent();
-                Projects.ExportCurrentProject();
+                // TODO : add the development layer to the export project, for now it is set to the default value of WPF.  This will be used to determine which development layer the exported project is intended for.
+                Projects.NewExportCurrentProject();
             }
         }
         private void SynchronizeContent()

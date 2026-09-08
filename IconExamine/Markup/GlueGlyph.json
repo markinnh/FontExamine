@@ -2,6 +2,7 @@
   "Name": "Starting",
   "Description": "The symbol definitions for the FontExamine project",
   "OutputPath": "C:\\Users\\markn\\source\\repos\\IconExamine\\IconExamine\\Markup",
+  "FileVersion": 1.1,
   "LastGenerated": "2026-03-06T00:00:00-07:00",
   "SymbolName": "Segoe",
   "NamespaceName": "FontExamine",
@@ -502,6 +503,39 @@
       "GlyphId": 57756,
       "GlyphName": "ExportToFolder",
       "GlyphDescription": "export to folder glyph"
+    },
+    {
+      "GlyphId": 57587,
+      "GlyphName": "RepairView",
+      "GlyphDescription": "repair view glyph"
+    },
+    {
+      "GlyphId": 57596,
+      "GlyphName": "Action",
+      "GlyphDescription": "action glyph"
+    },
+    {
+      "GlyphId": 57642,
+      "GlyphName": "Form",
+      "GlyphDescription": "form glyph"
+    },
+    {
+      "GlyphId": 128279,
+      "GlyphName": "SmallLink",
+      "GlyphDescription": "small link glyph"
+    },
+    {
+      "GlyphId": 57674,
+      "GlyphName": "Process",
+      "GlyphDescription": "process glyph"
+    }
+  ],
+  "ExportDefns": [
+    {
+      "ProjectName": "GlyphExamine",
+      "FilePath": "C:\\Users\\markn\\source\\repos\\IconExamine\\IconExamine\\Markup",
+      "GlyphUsedFor": "Segoe",
+      "Active": true
     }
   ]
 }

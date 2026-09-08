@@ -54,7 +54,7 @@ WriteLine($"	}}  // end class {symbolName}IconTable");
 //WriteLine("}");
 #>
 
-public class <#= fontUsed #>SymbolMarkupExtension:MarkupExtension
+public class Old<#= fontUsed #>SymbolMarkupExtension:MarkupExtension
 {
 	public <#= symbolName #>IconTable.<#= fontUsed #>Glyph Glyph { get; set; }= <#= symbolName #>IconTable.<#= fontUsed #>Glyph.<#= firstGlyphName #>;
 	public override object ProvideValue(IServiceProvider serviceProvider)

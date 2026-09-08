@@ -7,16 +7,13 @@ namespace FontExamine.Services
 {
     internal class SerializeProjects
     {
-        public static string DataDir { get; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir);    
+        public static string DataDir { get; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir);
         internal static string ProjectsDataFilePath { get; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir, "ProjectsData.json");
         public static void SaveProjects(FLuentSymbolsProjectsDefn defn)
         {
             //var datadir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir);
-            var options = new System.Text.Json.JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            string json = System.Text.Json.JsonSerializer.Serialize(defn,options);
+            var options = Singleton<CachedItems>.Instance.Dynamic.AppJsonSerializerOptions ?? Singleton<CachedItems>.Instance.DefaultJsonSerializerOptions;
+            string json = System.Text.Json.JsonSerializer.Serialize(defn, options);
             System.IO.File.WriteAllText(ProjectsDataFilePath, json);
         }
         public static FLuentSymbolsProjectsDefn LoadProjects()
@@ -25,11 +22,12 @@ namespace FontExamine.Services
             if (System.IO.File.Exists(ProjectsDataFilePath))
             {
                 string json = System.IO.File.ReadAllText(ProjectsDataFilePath);
-                return System.Text.Json.JsonSerializer.Deserialize<FLuentSymbolsProjectsDefn>(json) ?? GetDefaultProjects();
+                var options = Singleton<CachedItems>.Instance.Dynamic.AppJsonSerializerOptions;// ?? Singleton<CachedItems>.Instance.DefaultJsonSerializerOptions;
+                return System.Text.Json.JsonSerializer.Deserialize<FLuentSymbolsProjectsDefn>(json,options) ?? GetDefaultProjects();
             }
             else
             {
-                
+
                 return GetDefaultProjects();
             }
         }
@@ -40,6 +38,6 @@ namespace FontExamine.Services
             defn.AddDefaultProject();
 #endif
             return defn;
-        }        
+        }
     }
 }

@@ -5,10 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FontExamine.Views"
       xmlns:vm="clr-namespace:FontExamine.ViewModel"
+      xmlns:model="clr-namespace:FontExamine.Model"
       xmlns:markup="clr-namespace:FontExamine.Markup"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="BrowseSegoeFluent">
+      Title="BrowseSegoeFluent" Name="MainPage">
     <Page.DataContext>
         <vm:BrowseSegoeFluentViewModel/>
     </Page.DataContext>
@@ -17,6 +18,7 @@
     </Page.InputBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        
         <DataTemplate x:Key="DisplayLightGlyph" DataType="model:LightGlyphDefn">
             <Grid Margin="3">
 
@@ -124,7 +126,7 @@
                     <ContentControl Grid.Column="1" ContentTemplate="{StaticResource EditSegoeFluentGlyphDocument}" Content="{Binding EditDocument,Mode=TwoWay}"/>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                         <!--<Button Content="&#xE017;" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding AddGlyphToProjectCommand}"/>-->
-                        <Button Content="{markup:FluentRegularMarkup Glyph=ArrowForward20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding AddGlyphToProjectCommand}"/>
+                        <Button Content="{markup:FluentMarkup Glyph=ArrowForward20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding AddGlyphToProjectCommand}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -155,7 +157,7 @@
                             <ContextMenu>
                                 <MenuItem Header="Export Definition" Command="{Binding ExportSymbolDefinitionsProjectCommand}">
                                     <MenuItem.Icon>
-                                        <TextBlock Text="{markup:FluentRegularMarkup Glyph=ArrowRight20}" FontSize="16" Style="{StaticResource FluentTextBlockRegularGlyph}"/>
+                                        <TextBlock Text="{markup:SegoeSymbolMarkup Glyph=Process}" FontSize="16" Style="{StaticResource SegoeUISymbolTextBlock}"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
@@ -178,11 +180,71 @@
                         <TextBox Text="{Binding ActiveDefinition.Name,Mode=TwoWay}" Grid.Column="1" Margin="0,0,0,3"/>
                         <Label Content="Definition Description" Grid.Row="1"/>
                         <TextBox Text="{Binding ActiveDefinition.Description,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,3"/>
-                        <Label Content="Export Path" Grid.Row="2" />
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                            <TextBox Text="{Binding ActiveDefinition.OutputPath,Mode=TwoWay}"  Margin="0,3,0,3"  Width="220"/>
-                            <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportPathCommand}" />
-                        </StackPanel>
+
+                        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding ActiveDefinition.ExportDefns}" Height="150" AutoGenerateColumns="False" CanUserAddRows="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Project Name" Binding="{Binding Path=ProjectName}"/>
+                                <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=Active,UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTemplateColumn Header="Font Style">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=GlyphUsedFor,Converter={StaticResource DescriptionProvider}}" Margin="0,0,0,3"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox SelectedItem="{Binding Path=GlyphUsedFor,Mode=TwoWay}" ItemsSource="{Binding Source={x:Static model:EnumNameProvider.GlyphUsedFor}}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DescriptionProvider}}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Dev Layer" Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=DevLayer,Converter={StaticResource DescriptionProvider}}" Margin="0,0,0,3"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox SelectedItem="{Binding Path=DevLayer,Mode=TwoWay}" ItemsSource="{Binding Source={x:Static model:EnumNameProvider.DevelopementLayer}}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DescriptionProvider}}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Export Path">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=FilePath,Mode=TwoWay}" Margin="0,0,0,3"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportFilePathCommand}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Actions" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportFilePathCommand}" />
+                                                <Button Content="{markup:SegoeSymbolMarkup Glyph=Delete}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding ElementName=MainPage,Path=DataContext.ActiveDefinition.DeleteCommand}" CommandParameter="{Binding .}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <Expander Header="Last Generated" Grid.Row="3" Grid.Column="1">
                             <DatePicker SelectedDate="{Binding ActiveDefinition.LastGenerated,Mode=OneWay}" DisplayDate="{Binding ActiveDefinition.LastGenerated,Mode=OneWay}" IsEnabled="True"/>
                         </Expander>
@@ -205,10 +267,10 @@
                             </Grid>
                         </Expander>
                         <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
-                            <Button Content="{markup:FluentRegularMarkup Glyph=Add20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Add a definition to the collection" Command="{Binding AddProjectCommand}"/>
-                            <Button Content="{markup:FluentRegularMarkup Glyph=Save20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Save definitions project" Foreground="Blue" Command="{Binding SaveSymbolDefinitionsProjectCommand}"/>
-                            <Button Content="{markup:FluentRegularMarkup Glyph=Delete20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Delete selected definition"/>
-                            <Button Content="{markup:FluentRegularMarkup Glyph=CaretRight20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding GenerateStaticClassCommand}"/>
+                            <Button Content="{markup:FluentMarkup Glyph=Add20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Add a definition to the collection" Command="{Binding AddProjectCommand}"/>
+                            <Button Content="{markup:FluentMarkup Glyph=Save20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Save definitions project" Foreground="Blue" Command="{Binding SaveSymbolDefinitionsProjectCommand}"/>
+                            <Button Content="{markup:FluentMarkup Glyph=Delete20}" Style="{StaticResource FluentButtonRegularGlyph}" ToolTip="Delete selected definition"/>
+                            <Button Content="{markup:FluentMarkup Glyph=CaretRight20}" Style="{StaticResource FluentButtonRegularGlyph}" Command="{Binding GenerateStaticClassCommand}"/>
                             <Button Content="{markup:SegoeSymbolMarkup Glyph=Cancel}" Foreground="DarkRed" Style="{StaticResource SegoeUISymbolIcon}" IsEnabled="False"/>
                         </StackPanel>
                     </Grid>

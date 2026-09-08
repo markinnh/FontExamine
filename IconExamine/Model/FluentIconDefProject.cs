@@ -5,79 +5,98 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
-namespace FontExamine.Model
+namespace FontExamine.Model;
+public partial class FluentIconDefProject : ObservableObject
 {
-    public enum GlyphUsedFor
-    {
-        Segoe,
-        FluentFilled,
-        FluentRegular,
-        SegoeFluent
+    [ObservableProperty]
+    private string _name;
+    [ObservableProperty]
+    private string _description;
+    [ObservableProperty]
+    private string? _lastCommonNameSelected;
+    [ObservableProperty]
+    private float _fileVersion = 1.0f;
+    [ObservableProperty]
+    private string _symbolName = "Fluent";
+    [ObservableProperty]
+    private string _namespaceName = "Filament";
+    [ObservableProperty]
+    private bool _declareNamespace = false;
+    [ObservableProperty]
+    private GlyphUsedFor _usedFor= GlyphUsedFor.FluentRegular;
+    [ObservableProperty]
+    private ObservableCollection<string> selectedIcons;
+    [ObservableProperty]
+    private ObservableCollection<string> includeProjects;
+    [ObservableProperty]
+    private ObservableCollection<ExportFileDefn> exportDefns;
+    [ObservableProperty]
+    private string _exportPath;
 
+    public FluentIconDefProject()
+    {
+        WeakReferenceMessenger.Default.Register<ProjectRenamedEventArgs>(this, HandleProjectRenamed);
+        WeakReferenceMessenger.Default.Register<ProjectDeletedEventArgs>(this, HandleProjectDeleted);
+        WeakReferenceMessenger.Default.Register<FluentIconDefinitionLoadedEventArgs>(this, HandleDefinitionsLoaded);
+        ExportDefns = new ObservableCollection<ExportFileDefn>();
+        SelectedIcons = new ObservableCollection<string>();
+        IncludeProjects = new ObservableCollection<string>();
     }
-    public partial class FluentIconDefProject : ObservableObject
+
+    private void HandleDefinitionsLoaded(object recipient, FluentIconDefinitionLoadedEventArgs message)
     {
-        [ObservableProperty]
-        private string _name;
-        [ObservableProperty]
-        private string _description;
-        [ObservableProperty]
-        private string? _lastCommonNameSelected;
-        [ObservableProperty]
-        private string _symbolName = "Fluent";
-        [ObservableProperty]
-        private string _namespaceName = "Filament";
-        [ObservableProperty]
-        private bool _declareNamespace = false;
-        [ObservableProperty]
-        private GlyphUsedFor _usedFor= GlyphUsedFor.FluentRegular;
-        [ObservableProperty]
-        private ObservableCollection<string> selectedIcons;
-        [ObservableProperty]
-        private ObservableCollection<string> includeProjects;
-        [ObservableProperty]
-        private string _exportPath;
+        if(FileVersion == 1.0f && ExportDefns.Count == 0 && !string.IsNullOrEmpty(ExportPath))
+        {
+            ExportDefns.Add(new ExportFileDefn() { FilePath= ExportPath,GlyphUsedFor = UsedFor,ProjectName="ToBeNamed1" });
+            FileVersion=1.1f;
+            message.Modified = true;
+        }
+    }
 
-        public FluentIconDefProject()
+    private void HandleProjectDeleted(object recipient, ProjectDeletedEventArgs message)
+    {
+        if (message != null && (IncludeProjects?.Contains(message.ProjectName)??false))
         {
-            WeakReferenceMessenger.Default.Register<ProjectRenamedEventArgs>(this, HandleProjectRenamed);
-            WeakReferenceMessenger.Default.Register<ProjectDeletedEventArgs>(this, HandleProjectDeleted);
+            IncludeProjects.Remove(message.ProjectName);
         }
+    }
 
-        private void HandleProjectDeleted(object recipient, ProjectDeletedEventArgs message)
+    private void HandleProjectRenamed(object recipient, ProjectRenamedEventArgs message)
+    {
+        if (IncludeProjects?.Contains(message.OldName) ?? false)
         {
-            if (message != null && (IncludeProjects?.Contains(message.ProjectName)??false))
-            {
-                IncludeProjects.Remove(message.ProjectName);
-            }
+            IncludeProjects.Remove(message.OldName);
+            IncludeProjects.Add(message.NewName);
         }
-
-        private void HandleProjectRenamed(object recipient, ProjectRenamedEventArgs message)
+    }
+    partial void OnNameChanged(string? oldValue, string newValue)
+    {
+        // event ignored when the project is first being named
+        if (!string.IsNullOrEmpty(oldValue))
         {
-            if (IncludeProjects?.Contains(message.OldName) ?? false)
-            {
-                IncludeProjects.Remove(message.OldName);
-                IncludeProjects.Add(message.NewName);
-            }
+            WeakReferenceMessenger.Default.Send<ProjectRenamedEventArgs>(new ProjectRenamedEventArgs() { NewName = newValue, OldName = oldValue });
         }
-        partial void OnNameChanged(string? oldValue, string newValue)
+    }
+    [RelayCommand]
+    [property:JsonIgnore]
+    private void BrowseExportPath()
+    {
+        var dialog = new Microsoft.Win32.OpenFolderDialog();
+        dialog.Title = "Select Export Path";
+        if (dialog.ShowDialog() == true)
         {
-            // event ignored when the project is first being named
-            if (!string.IsNullOrEmpty(oldValue))
-            {
-                WeakReferenceMessenger.Default.Send<ProjectRenamedEventArgs>(new ProjectRenamedEventArgs() { NewName = newValue, OldName = oldValue });
-            }
+            ExportPath = dialog.FolderName;
         }
-        [RelayCommand]
-        private void BrowseExportPath()
+    }
+    [RelayCommand]
+    [property: JsonIgnore]
+    private void Delete(object p)
+    {
+        if(p is ExportFileDefn defn)
         {
-            var dialog = new Microsoft.Win32.OpenFolderDialog();
-            dialog.Title = "Select Export Path";
-            if (dialog.ShowDialog() == true)
-            {
-                ExportPath = dialog.FolderName;
-            }
+            ExportDefns.Remove(defn);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using FontExamine.Services;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,10 @@ public enum XamlElementSupported
         private string _name;
         [ObservableProperty]
         private string _hexcode;
+        partial void OnIsSelectedChanged(bool value)
+        {
+            WeakReferenceMessenger.Default.Send(new FluentGlyphSelectionChangedEventArgs(this, value));
+        }
         public string CommonName
         {
             get

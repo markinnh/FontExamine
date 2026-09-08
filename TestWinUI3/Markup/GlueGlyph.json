@@ -330,8 +330,8 @@
     },
     {
       "GlyphId": 57704,
-      "GlyphName": "At",
-      "GlyphDescription": "at glyph"
+      "GlyphName": "AtSymbol",
+      "GlyphDescription": "at symbol glyph"
     },
     {
       "GlyphId": 57707,
@@ -602,6 +602,46 @@
       "GlyphId": 59717,
       "GlyphName": "Event",
       "GlyphDescription": "event glyph"
+    },
+    {
+      "GlyphId": 57703,
+      "GlyphName": "Link",
+      "GlyphDescription": "link glyph"
+    },
+    {
+      "GlyphId": 59222,
+      "GlyphName": "CommandPrompt",
+      "GlyphDescription": "command prompt glyph"
+    },
+    {
+      "GlyphId": 59228,
+      "GlyphName": "Eraser",
+      "GlyphDescription": "eraser glyph"
+    },
+    {
+      "GlyphId": 59268,
+      "GlyphName": "Pipe",
+      "GlyphDescription": "pipe glyph"
+    },
+    {
+      "GlyphId": 60042,
+      "GlyphName": "HomeFilled",
+      "GlyphDescription": "home filled glyph"
+    },
+    {
+      "GlyphId": 60050,
+      "GlyphName": "BrokenHeart",
+      "GlyphDescription": "broken heart glyph"
+    },
+    {
+      "GlyphId": 59957,
+      "GlyphName": "SaveAll",
+      "GlyphDescription": "save all glyph"
+    },
+    {
+      "GlyphId": 60219,
+      "GlyphName": "Form",
+      "GlyphDescription": "form glyph"
     }
   ]
 }

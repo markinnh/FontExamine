@@ -17,9 +17,7 @@ namespace FontExamine.Model
         [ObservableProperty]
         [property: JsonIgnore]
         private string _xamlString;
-        [ObservableProperty]
-        [property: JsonIgnore]
-        private string _fontFamilyName = "Segoe UI Symbol";
+        
         [ObservableProperty]
         [property: JsonIgnore]
         private bool _hasDocument=false;
@@ -32,11 +30,11 @@ namespace FontExamine.Model
             XamlString = $"&#x{newValue:x4};";
         }
         //public string FontFamilyName { get; set; } = "Segoe UI Symbol";  // Obviously, this is a default value. It can be changed to any other font family name as needed.
-        internal string GenerateXaml(string str)
+        internal string GenerateXaml(string str,string activeFontFamilyName)
         {
-            
+            var styleName= activeFontFamilyName.Replace(" ", "");
             if (Enum.TryParse<XamlElementSupported>(str, true, out var element))
-                return GenerateXaml(element);
+                return GenerateXaml(element, activeFontFamilyName,styleName);
             else
                 return string.Empty;
 
@@ -53,14 +51,14 @@ namespace FontExamine.Model
             //        break;
             //}
         }
-        internal string GenerateXaml(XamlElementSupported element) => element
+        internal string GenerateXaml(XamlElementSupported element,string ActiveFontFamilyName,string StyleName) => element
             switch
         {
-            XamlElementSupported.TextBlock => $"<TextBlock Text=\"{XamlString}\" FontSize=\"20\" FontFamily=\"{FontFamilyName}\" />",
-            XamlElementSupported.Label => $"<Label Content=\"{XamlString}\" FontSize=\"20\" FontFamily=\"{FontFamilyName}\" />",
-            XamlElementSupported.FontSymbolIcon => $"<FontImageSource FontFamily=\"{FontFamilyName}\" Glyph=\"{XamlString}\" />",
-            XamlElementSupported.Button => $"<Button Content=\"{XamlString}\" Style=\"{{StaticResource SegoeUISymbolIconButton}}\" Command=\"{{Binding NotImplementedCommand}}\"/>",
-            XamlElementSupported.ToggleButton => $"<ToggleButton Content=\"{XamlString}\" Style=\"{{StaticResource SegoeUISymbolIconToggleButton}}\" IsChecked=\"{{Binding ToBeDetermined}}\"/>",
+            XamlElementSupported.TextBlock => $"<TextBlock Text=\"{XamlString}\" FontSize=\"20\" FontFamily=\"{ActiveFontFamilyName}\" />",
+            XamlElementSupported.Label => $"<Label Content=\"{XamlString}\" FontSize=\"20\" FontFamily=\"{ActiveFontFamilyName}\" />",
+            XamlElementSupported.FontSymbolIcon => $"<FontImageSource FontFamily=\"{ActiveFontFamilyName}\" Glyph=\"{XamlString}\" />",
+            XamlElementSupported.Button => $"<Button Content=\"{XamlString}\" Style=\"{{StaticResource {StyleName}IconButton}}\" Command=\"{{Binding NotImplementedCommand}}\"/>",
+            XamlElementSupported.ToggleButton => $"<ToggleButton Content=\"{XamlString}\" Style=\"{{StaticResource {StyleName}SymbolIconToggleButton}}\" IsChecked=\"{{Binding ToBeDetermined}}\"/>",
             _ => string.Empty
         };
     }

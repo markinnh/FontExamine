@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FontExamine"
         xmlns:viewmodels="clr-namespace:FontExamine.ViewModel"
         xmlns:model="clr-namespace:FontExamine.Model"
+        xmlns:helper="clr-namespace:FontExamine.Helper"
         mc:Ignorable="d"
         Title="Glyph Explorer" Height="500" Width="800">
     
@@ -18,12 +19,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="View">
-                <MenuItem Header="Symbol Browse" Tag="Views\BrowseSymbolIcons.xaml" Click="MenuItem_Click" ToolTip="Browse segoe symbol icons (Segoe UI Symbol)"/>
-                <MenuItem Header="Segoe Fluent Browse" Tag="Views\BrowseSegoeFluent.xaml" Click="MenuItem_Click" ToolTip="Segoe Fluent Icons (Windows 10+)"/>
-                <MenuItem Header="Fluent Icon Browse" Tag="Views\Projects.xaml" Click="MenuItem_Click" ToolTip="Browse fluent icons (Fluent UI)"/>
+            <MenuItem x:Name="ViewMenuItem" Header="View">
+                <MenuItem.Icon>
+                    <TextBlock Text="&#xeb3b;" FontSize="14" FontFamily="Segoe Fluent Icons" />
+                </MenuItem.Icon>
+            
+            <MenuItem Header="Symbol Browse" Tag="{x:Static helper:CurrentMenuTagConfig.SegoeUISymbol}" Click="MenuItem_Click" ToolTip="Browse segoe symbol icons (Segoe UI Symbol)" IsCheckable="True"/>
+                <MenuItem Header="Segoe Fluent Browse" Tag="{x:Static helper:CurrentMenuTagConfig.SegoeUIFluent}" Click="MenuItem_Click" ToolTip="Segoe Fluent Icons (Windows 10+)" IsCheckable="True"/>
+                <MenuItem Header="Fluent Icon Browse" Tag="{x:Static helper:CurrentMenuTagConfig.FluentMenuTag}" Click="MenuItem_Click" ToolTip="Browse fluent icons (Fluent UI)" IsCheckable="True"/>
             </MenuItem>
         </Menu>
-        <Frame Grid.Row="1" Name="ViewFrame" Source="Views\BrowseSymbolIcons.xaml" NavigationUIVisibility="Hidden"/>
+        <Frame Grid.Row="1" Name="ViewFrame" Source="Views\BrowseSymbolIcons.xaml" NavigationUIVisibility="Hidden" Navigated="ViewFrame_Navigated"/>
     </Grid>
 </Window>

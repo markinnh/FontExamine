@@ -29,37 +29,37 @@ WriteLine($"// {symbolDefinitions["DefinedGlyphs"]?.Count()} defined glyphs");
 WriteLine($"// Last Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
 // output the enums
 WriteLine("namespace TestWinUI3.Markup;");
-WriteLine($"		public enum {fontUsed}Glyph {{");
+WriteLine($"		public enum {symbolName}Glyph {{");
 for(int i = 0; i < symbolDefinitions["DefinedGlyphs"]?.Count(); i++)
 {
 	var name = symbolDefinitions["DefinedGlyphs"][i]["GlyphName"].ToString();
-	var unicode = symbolDefinitions["DefinedGlyphs"][i]["GlyphId"].ToString();
+	//var unicode = symbolDefinitions["DefinedGlyphs"][i]["GlyphId"].ToString();
 	var nextchar= i + 1 < symbolDefinitions["DefinedGlyphs"]?.Count() ? "," : "";
 	if(i == 0)
 	{
 		firstGlyphName = name;
 	}
-	WriteLine($"		    {name} = {unicode}{nextchar}");
+	WriteLine($"		    {name}{nextchar}");
 }
 WriteLine("			} // end enum");
 WriteLine($"    public static class {symbolName}IconTable {{");
-WriteLine($"			public static Dictionary<{fontUsed}Glyph, string> GlyphToUnicodeMap = new Dictionary<{fontUsed}Glyph, string>() {{");
+WriteLine($"			public static Dictionary<{symbolName}Glyph, string> GlyphToUnicodeMap = new Dictionary<{symbolName}Glyph, string>() {{");
 for(int i = 0; i < symbolDefinitions["DefinedGlyphs"]?.Count(); i++)
 {
 	var name = symbolDefinitions["DefinedGlyphs"][i]["GlyphName"].ToString();
 	var unicode = symbolDefinitions["DefinedGlyphs"][i]["GlyphId"].ToString();
 	var nextchar= i + 1 < symbolDefinitions["DefinedGlyphs"]?.Count() ? "," : "};";
-	WriteLine($"		    {{ {fontUsed}Glyph.{name}, char.ConvertFromUtf32({unicode}) }}{nextchar}");
+	WriteLine($"		    {{ {symbolName}Glyph.{name}, char.ConvertFromUtf32({unicode}) }}{nextchar}");
 }
 WriteLine($"	}}  // end class {symbolName}IconTable");
 //WriteLine("}");
 #>
 
 
-public class <#= fontUsed #>IconHelper
+public class <#= symbolName #>IconHelper
 {
-	public <#= fontUsed #>Glyph Glyph { get; set; }= <#= fontUsed #>Glyph.<#= firstGlyphName #>;
-	public static string GetGlyphUnicode(<#= fontUsed #>Glyph glyph)
+	public <#= symbolName #>Glyph Glyph { get; set; }= <#= symbolName #>Glyph.<#= firstGlyphName #>;
+	public static string GetGlyphUnicode(<#= symbolName #>Glyph glyph)
     {
         return <#= symbolName #>IconTable.GlyphToUnicodeMap[glyph];
     }

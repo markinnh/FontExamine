@@ -22,5 +22,9 @@ namespace FontExamine.Views
         {
             InitializeComponent();
         }
+        internal void SetFontFamily(string fontFamily)
+        {
+            Resources["DisplayFontFamily"] = new FontFamily(fontFamily);
+        }
     }
 }

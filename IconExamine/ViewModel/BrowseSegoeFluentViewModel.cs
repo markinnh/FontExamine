@@ -49,6 +49,14 @@ public partial class BrowseSegoeFluentViewModel : ObservableObject
             newValue.UsedFor = GlyphUsedFor.SegoeFluent;
             newValue.SymbolName = nameof(GlyphUsedFor.SegoeFluent);
         }
+        // clear the HasDocument flag for all glyphs in the project, then set it for the glyphs in the active definition
+        foreach (var glyph in GlyphIds)
+            glyph.HasDocument = false;
+        foreach (var glyph in newValue.DefinedGlyphs)
+        {
+            if (GlyphIds.FirstOrDefault(g => g.GlyphId == glyph.GlyphId) is LightGlyphDefn lightGlyph)
+                lightGlyph.HasDocument = true;
+        }
     }
     partial void OnActiveGlyphChanged(LightGlyphDefn value)
     {
@@ -101,7 +109,8 @@ public partial class BrowseSegoeFluentViewModel : ObservableObject
     {
         if (ActiveGlyph != null && p is string str)
         {
-            Clipboard.SetText(ActiveGlyph.GenerateXaml(str));
+            //ActiveGlyph.FontFamilyName = "Segoe Fluent Icons"; 
+            Clipboard.SetText(ActiveGlyph.GenerateXaml(str, "Segoe Fluent Icons"));
         }
     }
     [RelayCommand]
@@ -131,8 +140,8 @@ public partial class BrowseSegoeFluentViewModel : ObservableObject
     {
         if (ActiveDefinition != null && !string.IsNullOrEmpty(ActiveDefinition.OutputPath))
         {
-            var projectDir = Path.Combine(ActiveDefinition.OutputPath, "GlueGlyph.json");
-            ActiveDefinition.ExportDefinitions(projectDir);
+            //var projectDir = Path.Combine(ActiveDefinition.OutputPath, "GlueGlyph.json");
+            ActiveDefinition.ExportDefinitions("GlueGlyph.json");
         }
     }
     [RelayCommand]

@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FontExamine.Helper;
 using FontExamine.Model;
 using FontExamine.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,7 +17,7 @@ using System.Windows.Automation;
 
 namespace FontExamine.ViewModel;
 
-public partial class BrowseSymbolIconsViewModel : ObservableObject
+public partial class BrowseSymbolIconsViewModel : ObservableObject, IContextPacketConsumer
 {
     const string Filename = "SymbolDefinitionsProject.json";
     [ObservableProperty]
@@ -29,21 +32,52 @@ public partial class BrowseSymbolIconsViewModel : ObservableObject
     private SymbolIconDefinitionsProject _symbolIconDefinitionsProject;
     [ObservableProperty]
     private SymbolIconDefinitions _activeDefinition;
+    [ObservableProperty]
+    private ContextPacketConfig _contextPacket;
+    [ObservableProperty]
+    private string _activeFontFamily="Segoe UI Symbol";
     public BrowseSymbolIconsViewModel()
     {
-        var projectFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir, Filename);
+        //var projectFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir, Filename);
 
-        GlyphIds = new ObservableCollection<LightGlyphDefn>(from i in Singleton<SupportedTables>.Instance.SegoeUISymbol select new LightGlyphDefn() { GlyphId = i, UnicodeChar = char.ConvertFromUtf32(i) });
-        SymbolIconDefinitionsProject = SymbolIconDefinitionsProject.LoadDefinitions(projectFile);
-        if (!string.IsNullOrEmpty(SymbolIconDefinitionsProject.ActiveDefinitionName) && SymbolIconDefinitionsProject.Definitions.FirstOrDefault(dfn => dfn.Name == SymbolIconDefinitionsProject.ActiveDefinitionName) is SymbolIconDefinitions dfn)
-            ActiveDefinition = dfn;
-        
+        //GlyphIds = new ObservableCollection<LightGlyphDefn>(from i in Singleton<SupportedTables>.Instance.SegoeUISymbol select new LightGlyphDefn() { GlyphId = i, UnicodeChar = char.ConvertFromUtf32(i) });
+        //SymbolIconDefinitionsProject = SymbolIconDefinitionsProject.LoadDefinitions(projectFile);
+
     }
 
+    public void ConsumeContextPacket(ContextPacketConfig contextPacket)
+    {
+        ContextPacket = contextPacket;
+        if (contextPacket.GlyphIds != null)
+        {
+            GlyphIds = new ObservableCollection<LightGlyphDefn>(from i in contextPacket.GlyphIds select new LightGlyphDefn() { GlyphId = i, UnicodeChar = char.ConvertFromUtf32(i) });
+        }
+        ActiveFontFamily = contextPacket.FontFamily;
+        //Debug.Assert(contextPacket.FileName == Filename, $"Expected {Filename} but got {contextPacket.FileName}");
 
+        var projectFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Settings1.Default.DataDir, contextPacket.FileName);
+
+        if (File.Exists(projectFile))
+        {
+            SymbolIconDefinitionsProject = SymbolIconDefinitionsProject.LoadDefinitions(projectFile);
+
+            if (!string.IsNullOrEmpty(SymbolIconDefinitionsProject.ActiveDefinitionName) && SymbolIconDefinitionsProject.Definitions.FirstOrDefault(dfn => dfn.Name == SymbolIconDefinitionsProject.ActiveDefinitionName) is SymbolIconDefinitions dfn)
+                ActiveDefinition = dfn;
+        }
+    }
     partial void OnActiveDefinitionChanged(SymbolIconDefinitions? oldValue, SymbolIconDefinitions newValue)
     {
-        SymbolIconDefinitionsProject.ActiveDefinitionName = newValue.Name;
+        if (newValue != null)
+        {
+            SymbolIconDefinitionsProject.ActiveDefinitionName = newValue.Name;
+            foreach (var glyph in GlyphIds)
+                glyph.HasDocument = false;
+            foreach (var glyph in newValue.DefinedGlyphs)
+            {
+                if (GlyphIds.FirstOrDefault(g => g.GlyphId == glyph.GlyphId) is LightGlyphDefn lightGlyph)
+                    lightGlyph.HasDocument = true;
+            }
+        }
     }
     partial void OnActiveGlyphChanged(LightGlyphDefn value)
     {
@@ -96,7 +130,7 @@ public partial class BrowseSymbolIconsViewModel : ObservableObject
     {
         if (ActiveGlyph != null && p is string str)
         {
-            Clipboard.SetText(ActiveGlyph.GenerateXaml(str));
+            Clipboard.SetText(ActiveGlyph.GenerateXaml(str, ActiveFontFamily));
         }
     }
     [RelayCommand]
@@ -124,10 +158,11 @@ public partial class BrowseSymbolIconsViewModel : ObservableObject
     [RelayCommand]
     private void ExportSymbolDefinitionsProject()
     {
-        if (ActiveDefinition != null && !string.IsNullOrEmpty(ActiveDefinition.OutputPath))
+        if (ActiveDefinition != null)
         {
-            var projectDir = Path.Combine(ActiveDefinition.OutputPath, "GlueGlyph.json");
-            ActiveDefinition.ExportDefinitions(projectDir);
+            //var projectDir = Path.Combine(ActiveDefinition.OutputPath, "GlueGlyph.json");
+            //ActiveDefinition.ExportDefinitions("GlueGlyph.json");
+            ActiveDefinition.ExportActiveDefinitions();
         }
     }
     [RelayCommand]

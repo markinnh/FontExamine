@@ -9,8 +9,9 @@
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:converters="clr-namespace:FontExamine.Converters"
       xmlns:base="clr-namespace:FontExamine"
+      xmlns:markup="clr-namespace:FontExamine.Markup"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="800" Name="Main"
       Title="Projects">
     <Page.DataContext>
         <viewmodel:ProjectPageViewModel/>
@@ -33,7 +34,7 @@
                 <TextBlock Text="{Binding Description}" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Width="175"/>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="IconTemplate" DataType="model:IconDefn">
+        <DataTemplate x:Key="IconTemplate" DataType="model:FluentGlyphDefn">
             <Grid Visibility="{Binding Visible}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -103,7 +104,7 @@
                             <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="0,0,5,0"/>
                             <TextBox Text="{Binding SelectedProject.Description,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="32" VerticalScrollBarVisibility="Auto"/>
                             <TextBlock Text="Selected Icons" FontWeight="Bold" Grid.Row="2"/>
-                            <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SelectedProject.SelectedIcons}" Height="250" SelectedItem="{Binding SelectedCommonName,Mode=TwoWay}">
+                            <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SelectedProject.SelectedIcons}" Height="150" SelectedItem="{Binding SelectedCommonName,Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate >
                                         <StackPanel Orientation="Horizontal">
@@ -115,7 +116,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <Expander Header="Include Projects" Grid.Column="1" Grid.Row="4">
+                            <!--<Expander Header="Include Projects" Grid.Column="1" Grid.Row="4">
                                 <ListView ItemsSource="{Binding IncludeProjects}" Height="100">
                                     <ListView.ItemTemplate>
                                         <DataTemplate >
@@ -125,21 +126,99 @@
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
-                            </Expander>
-                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
-                                <TextBox Text="{Binding SelectedProject.ExportPath,Mode=OneWay}" IsReadOnly="True" Width="400"/>
-                            </StackPanel>
+                            </Expander>-->
+                            
                             <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
-                                <Button Content="&#xf689;" ToolTip="Save project to default file" FontFamily="FluentSystemIcons-Filled" Command="{Binding SaveProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
-                                <Button Content="&#xf109;" Command="{Binding AddProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
-                                <Button Content="&#xf34c;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Delete project from the file, cannot recover deletions" Command="{Binding RemoveProjectCommand}"/>
-                                <Button Content="&#xf380;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Clone the selected project and add to the list" Command="{Binding NotImplementedCommand}"/>
-                                <Button Content="&#xf432;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Browse and set export path" Command="{Binding SelectedProject.BrowseExportPathCommand}"/>
+                                <Button Content="{markup:FluentMarkup IsFilled=True, Glyph=Save20}" ToolTip="Save project to default file" FontFamily="FluentSystemIcons-Filled" Command="{Binding SaveProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
+                                <Button Content="{markup:FluentMarkup IsFilled=True, Glyph=Add20}" Command="{Binding AddProjectCommand}" Style="{StaticResource FluentButtonFilledGlyph}"/>
+                                <Button Content="{markup:FluentMarkup IsFilled=True, Glyph=Delete20}" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Delete project from the file, cannot recover deletions" Command="{Binding RemoveProjectCommand}"/>
+                                <Button Content="{markup:FluentMarkup IsFilled=True, Glyph=Copy20}" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Clone the selected project and add to the list" Command="{Binding NotImplementedCommand}"/>
+                                <!--<Button Content="&#xf432;" Style="{StaticResource FluentButtonFilledGlyph}" ToolTip="Browse and set export path" Command="{Binding SelectedProject.BrowseExportPathCommand}"/>-->
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Filled Icons">
+                <TabItem Header="Settings" ToolTip="Project Settings">
+                    <StackPanel>
+                    <DataGrid  ItemsSource="{Binding SelectedProject.ExportDefns}" Height="150" VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Namespace Name" Binding="{Binding Path=ProjectName,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=Active,UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTemplateColumn Header="Font Style">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=GlyphUsedFor,Converter={StaticResource DescriptionProvider}}" Margin="0,0,0,3"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox SelectedItem="{Binding Path=GlyphUsedFor,Mode=TwoWay}" ItemsSource="{Binding Source={x:Static model:EnumNameProvider.GlyphUsedFor}}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DescriptionProvider}}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Dev Layer" Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=DevLayer,Converter={StaticResource DescriptionProvider}}" Margin="0,0,0,3"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox SelectedItem="{Binding Path=DevLayer,Mode=TwoWay}" ItemsSource="{Binding Source={x:Static model:EnumNameProvider.DevelopementLayer}}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DescriptionProvider}}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Export Path" Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=FilePath,Mode=TwoWay}" Margin="0,0,0,3" ToolTip="{Binding Path=FilePath}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <!--<DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportFilePathCommand}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>-->
+                            </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Actions" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="{markup:SegoeSymbolMarkup Glyph=ExportToFolder}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding BrowseExportFilePathCommand}" />
+                                                <Button Content="{markup:SegoeSymbolMarkup Glyph=Delete}" Style="{StaticResource SegoeUISymbolIcon}" Command="{Binding ElementName=Main,Path=DataContext.SelectedProject.DeleteCommand}" CommandParameter="{Binding .}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                    </DataGrid>
+                        <Expander Header="Include Projects" Grid.Column="1" Grid.Row="4">
+                            <ListView ItemsSource="{Binding IncludeProjects}" Height="100">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox IsChecked="{Binding Checked,Mode=TwoWay}" Content="{Binding Name}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Expander>
+                        
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Filled Glyphs">
                     <ListView Grid.Row="1" ItemsSource="{Binding FilledIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}" SelectedItem="{Binding SelectedFilledIcon,Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
                         <ListView.ContextMenu>
                             <ContextMenu>
@@ -195,7 +274,7 @@
                         </ListView.ItemsPanel>
                     </ListView>
                 </TabItem>
-                <TabItem Header="Regular Icons">
+                <TabItem Header="Regular Glyphs">
                     <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RegularIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}" SelectedItem="{Binding SelectedRegularIcon,Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
                         <ListView.ContextMenu>
                             <ContextMenu>

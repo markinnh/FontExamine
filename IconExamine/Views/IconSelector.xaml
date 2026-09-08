@@ -13,7 +13,7 @@
     </Page.DataContext>
     <Page.Resources>
         <DataTemplate x:Key="IconTemplate" DataType="model:IconDefn">
-            <Grid>
+            <Grid Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -47,10 +47,10 @@
         </Grid.RowDefinitions>
         <TabControl Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
             <TabItem Header="Filled Icons">
-                <ListView Grid.Row="1" ItemsSource="{Binding FilledIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}">
+                <ListView Grid.Row="1" ItemsSource="{Binding FilledIconCollectionViewSource.View}" ItemTemplate="{StaticResource IconTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
+                            <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                 </ListView>

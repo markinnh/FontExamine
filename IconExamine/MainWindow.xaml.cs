@@ -1,4 +1,6 @@
 ﻿using FontExamine;
+using FontExamine.Helper;
+using FontExamine.Views;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,12 +19,32 @@ namespace IconExamine
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MenuItem lastChecked;
+        private bool hasPacket = false;
+        private ContextPacketConfig? packetConfig;
         public MainWindow()
         {
+
             InitializeComponent();
-            if(Settings1.Default.LastPage is string str && !string.IsNullOrEmpty(str))
+            if (Settings1.Default.LastPage is string str && !string.IsNullOrEmpty(str))
             {
-                ViewFrame.Navigate(new Uri(str, UriKind.RelativeOrAbsolute));
+                var target = string.Empty;
+                foreach (MenuItem item in ViewMenuItem.Items)
+                {
+                    if (item.Tag is MenuTagConfig tagConfig && tagConfig.Id == str)
+                    {
+                        item.IsChecked = true;
+                        lastChecked = item;
+                        target = tagConfig.Page;
+                        hasPacket = tagConfig.HasContextPacket;
+                        packetConfig = tagConfig.ContextPacket;
+                        break;
+                    }
+                }
+                if (!string.IsNullOrEmpty(target))
+                {
+                    ViewFrame.Navigate(new Uri(target, UriKind.RelativeOrAbsolute));
+                }
             }
             this.Icon = CreateIconFromChar('\uE11a', "Segoe Fluent Icons", 32);
         }
@@ -55,10 +77,35 @@ namespace IconExamine
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem menu && menu.Tag is string str) { 
-                Settings1.Default.LastPage = str;
+            if (sender is MenuItem menu && menu.Tag is MenuTagConfig tagConfig)
+            {
+                Settings1.Default.LastPage = tagConfig.Id;
+                menu.IsChecked = true;
+                if (lastChecked != null && lastChecked != menu)
+                    lastChecked.IsChecked = false;
+                lastChecked = menu;
                 Settings1.Default.Save();
-                ViewFrame.Navigate(new Uri(str,UriKind.RelativeOrAbsolute));
+                hasPacket = tagConfig.HasContextPacket;
+                packetConfig = tagConfig.ContextPacket;
+                ViewFrame.Navigate(new Uri(tagConfig.Page, UriKind.RelativeOrAbsolute));
+            }
+        }
+
+        private void ViewFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (hasPacket)
+            {
+
+                if (ViewFrame.Content is Page page &&  page.DataContext is IContextPacketConsumer consumer && packetConfig != null)
+                {
+                    if(page is BrowseSymbolIcons browseSymbolIcons)
+                    {
+                        browseSymbolIcons.SetFontFamily(packetConfig.FontFamily);
+                    }
+                    consumer.ConsumeContextPacket(packetConfig);
+                    hasPacket = false;
+                    packetConfig = null;
+                }
             }
         }
     }

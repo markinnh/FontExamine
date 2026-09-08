@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FontExamine.Model
 {
@@ -30,10 +31,19 @@ namespace FontExamine.Model
                 ActiveDefinitionName = message.NewName;
             }
         }
-
+        private void NotifyLoadComplete(string projectFilename)
+        {
+            var args = new SymbolIconDefinitionsLoadedEventArgs();
+            WeakReferenceMessenger.Default.Send<SymbolIconDefinitionsLoadedEventArgs>(args);
+            if (args.Modified)
+            {
+                // need to get the actual projectFilename
+                SaveDefinitions(projectFilename);
+            }
+        }
         internal void SaveDefinitions(string projectFilename)
         {
-            var options = new JsonSerializerOptions() { WriteIndented = true };
+            var options = Singleton<CachedItems>.Instance.Dynamic.AppJsonSerializerOptions as JsonSerializerOptions ?? Singleton<CachedItems>.Instance.DefaultJsonSerializerOptions;
             var stream = File.Create(projectFilename);
             JsonSerializer.Serialize(stream, this, options);
             stream.Close();
@@ -43,9 +53,11 @@ namespace FontExamine.Model
             if (File.Exists(projectName))
             {
                 GlyphDocument.LoadingDocument = true;
+                var options = Singleton<CachedItems>.Instance.Dynamic.AppJsonSerializerOptions as JsonSerializerOptions ?? Singleton<CachedItems>.Instance.DefaultJsonSerializerOptions;
                 var contents = File.ReadAllText(projectName);
-                var result= JsonSerializer.Deserialize<SymbolIconDefinitionsProject>(contents) ?? new SymbolIconDefinitionsProject();
+                var result= JsonSerializer.Deserialize<SymbolIconDefinitionsProject>(contents, options) ?? new SymbolIconDefinitionsProject();
                 GlyphDocument.LoadingDocument = false;
+                result.NotifyLoadComplete(projectName);
                 return result;
             }
             else

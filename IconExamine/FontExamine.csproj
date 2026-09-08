@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Remove="Markup\GlyphGlue - Copy.cs" />
+    <Compile Remove="Markup\LinkGlyph - Copy.cs" />
     <Compile Remove="Markup\SegoeSymbolMarkupExtension.cs" />
   </ItemGroup>
 
@@ -20,10 +21,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>GlyphGlue.tt</DependentUpon>
     </None>
+    <None Include="Markup\LinkGlyph SegoeFluent.cs">
+      <DependentUpon>LinkGlyph.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+    <None Include="Markup\LinkGlyph.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinkGlyph.tt</DependentUpon>
+    </None>
+    <None Include="Markup\LinkGlyphFluent.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinkGlyphFluent.tt</DependentUpon>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +52,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GlyphGlue.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Markup\LinkGlyph SegoeFluent.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinkGlyph SegoeFluent.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Markup\LinkGlyph.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinkGlyph.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Markup\LinkGlyphFluent.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinkGlyphFluent.tt</DependentUpon>
     </Compile>
     <Compile Update="Settings1.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -52,6 +83,18 @@
     <None Update="Markup\GlyphGlue.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlyphGlue.cs</LastGenOutput>
+    </None>
+    <None Update="Markup\LinkGlyph SegoeFluent.tt">
+      <LastGenOutput>LinkGlyph SegoeFluent.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Markup\LinkGlyph.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LinkGlyph.cs</LastGenOutput>
+    </None>
+    <None Update="Markup\LinkGlyphFluent.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LinkGlyphFluent.cs</LastGenOutput>
     </None>
     <None Update="Settings1.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
